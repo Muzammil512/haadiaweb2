@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Poetic Love - For Haadia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+  header {
+      background: linear-gradient(90deg, rgba(255, 105, 180, 0.9), rgba(255, 182, 193, 0.9));
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      padding: 2.5rem 0;
+      position: absolute;
+
+    }
+    nav a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    nav a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+    }
+    nav a.active {
+      background: #ff4d94 !important;
+      color: white !important;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.6);
+    }
+    .heart-btn svg {
+      transition: transform 0.3s ease;
+    }
+    .heart-btn:hover svg {
+      transform: scale(1.2);
+    }
+    </style>
+</head>
+<body class="font-poppins text-gray-800 bg-gradient-to-b from-pink-50 via-pink-100 to-red-200 min-h-screen pt-24 overflow-x-hidden">
+   <header class=" top-0 w-full  z-50">
+    <nav class="max-w-6xl mx-auto flex items-center justify-center px-4 relative">
+      <div class="space-x-4">
+        <a href="index.html" class="text-white font-medium bg-pink-500/30 text-lg rounded-full hover:bg-pink-500/50 hover:text-pink-100 hover:shadow-md transition-all duration-300 nav-link " id="nav-home">Home</a>
+        <a href="our-journey.html" class="text-white font-medium bg-pink-500/30 text-lg rounded-full hover:bg-pink-500/50 hover:text-pink-100 hover:shadow-md transition-all duration-300 nav-link" id="nav-journey">Our Journey</a>
+        <a href="our-eternal-love.html" class="text-white font-medium bg-pink-500/30 text-lg rounded-full hover:bg-pink-500/50 hover:text-pink-100 hover:shadow-md transition-all duration-300 nav-link" id="nav-eternal">Our Eternal Love</a>
+        <a href="our-poetic-love.html" class="text-white font-medium bg-pink-500/30 text-lg rounded-full hover:bg-pink-500/50 hover:text-pink-100 hover:shadow-md transition-all duration-300 nav-link active" id="nav-poetic">Our Poetic Love</a>
+      </div>
+      
+    </nav>
+  </header>
+
+
+  <main class="max-w-4xl mx-auto py-12 px-4 relative z-10">
+    <section id="our-poetic-love" class="bg-white/90 p-6 rounded-xl shadow-md border-2 border-pink-300/50 mb-8">
+      <h2 class="text-4xl font-bold text-pink-800 mb-4 font-playfair">Our Poetic Love</h2>
+      <img src="img/img3.png" alt="Poetic Love Picture" class="w-full h-auto rounded-lg shadow-lg mb-4 hover:scale-105 hover:shadow-xl transition-transform duration-300">
+      <p class="text-lg">Your love is my muse, Haadia Muzammil, inspiring verses in my heart that sing of you forever.</p>
+    </section>
+    <div id="dynamic-content"></div>
+  </main>
+
+  <footer class="bg-gradient-to-r from-pink-600 to-pink-800 text-white py-6 text-center relative z-10">
+    <p>Forever yours, Haadia Muzammil, with all my heart.</p>
+  </footer>
+
+  <script>
+    function loadContent() {
+      const contents = JSON.parse(localStorage.getItem('loveContents')) || [];
+      const sectionContent = document.getElementById('dynamic-content');
+      contents.forEach(content => {
+        if (content.sectionId === 'our-poetic-love') {
+          const newSection = document.createElement('div');
+          newSection.className = 'bg-white/90 p-6 rounded-xl shadow-md border-2 border-pink-300/50 mb-8';
+          newSection.innerHTML = `<img src="${content.imageUrl}" alt="New Picture" class="w-full h-auto rounded-lg shadow-lg mb-4 hover:scale-105 hover:shadow-xl transition-transform duration-300"><p class="text-lg">${content.paragraph}</p>`;
+          sectionContent.appendChild(newSection);
+        }
+      });
+    }
+
+    window.onload = loadContent;
+  </script>
+</body>
+</html>

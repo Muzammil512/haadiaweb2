@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Forever Love, Haadia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffafbd, #ffc3a0, #ffecd2);
+    }
+    .carousel {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      overflow: hidden;
+    }
+    .carousel-item.active {
+      opacity: 1;
+    }
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .carousel-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(14, 9, 9, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-overlay h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 5rem;
+      color: white;
+      text-shadow: 0 0 20px rgba(255, 77, 148, 0.8);
+      text-align: center;
+    }
+    .carousel-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+    .carousel-indicators span {
+      width: 12px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .carousel-indicators span.active {
+      background: #ff4d94;
+    }
+    .heart-container {
+      position: relative;
+      margin: 4rem auto;
+      width: 600px;
+      height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .heart-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      fill: #ff4d94;
+      filter: drop-shadow(0 0 20px rgba(255, 77, 148, 0.8));
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .heart-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+      text-align: center;
+      z-index: 1;
+    }
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .particle {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: rgba(255, 105, 180, 0.7);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: float 7s infinite;
+      opacity: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.4); opacity: 0.7; }
+      100% { transform: translateY(-100vh) scale(0.9); opacity: 0; }
+    }
+    .love-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #ff4d94;
+      text-shadow: 0 0 10px rgba(255, 77, 148, 0.8);
+      opacity: 0;
+      z-index: 100;
+    }
+    .love-message.active {
+      animation: fadeInOut 3s ease-in-out forwards;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+    }
+    .nav-heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 77, 148, 0.8);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: rise 2s ease-in forwards;
+      opacity: 0;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0); opacity: 0.8; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+    header {
+      background: linear-gradient(90deg, rgba(255, 105, 180, 0.9), rgba(255, 182, 193, 0.9));
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      padding: 1.5rem 0;
+    }
+    nav a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    nav a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+    }
+    nav a.active {
+      background: #ff4d94 !important;
+      color: white !important;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.6);
+    }
+    .heart-btn svg {
+      transition: transform 0.3s ease;
+    }
+    .heart-btn:hover svg {
+      transform: scale(1.2);
+    }
+    .chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      text-align: right;
+    }
+    .chatbot-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5rem;
+      color: #ff4d94;
+      margin-bottom: 5px;
+    }
+    .chatbot-icon {
+      width: 60px;
+      height: 60px;
+      background: url('https://www.pngall.com/wp-content/uploads/12/Avatar-PNG-Images-HD.png') no-repeat center;
+      background-size: cover;
+      border-radius: 50%;
+      border: 3px solid #ff4d94;
+      position: relative;
+      cursor: pointer;
+      margin-left: auto;
+    }
+    .chatbot-speech {
+      position: absolute;
+      top: -40px;
+      right: 70px;
+      background: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      color: #ff4d94;
+      display: none;
+    }
+    .chatbot-speech.active {
+      display: block;
+    }
+    .chatbot-speech::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      right: 10px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid #fff;
+    }
+    .chatbot-input {
+      display: none;
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 300px; /* Increased width for better spacing */
+      background: #fff;
+      padding: 15px; /* Increased padding */
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .chatbot-input.active {
+      display: block;
+    }
+    .chatbot-input input {
+      width: 100%;
+      padding: 10px; /* Increased padding for input */
+      border: 1px solid #ff4d94;
+      border-radius: 5px;
+      outline: none;
+      font-size: 16px; /* Larger font for readability */
+    }
+  </style>
+</head>
+<body class="font-poppins text-gray-800 overflow-x-hidden">
+  <div class="particles" id="particles"></div>
+
+  <!-- Carousel -->
+  <section class="carousel">
+    <div class="carousel-item active">
+      <img src="img/img1.png" alt="Romantic Scene 1">
+      <div class="carousel-overlay">
+        <h1>Our First Moment</h1>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="img/img2.png" alt="Romantic Scene 2">
+      <div class="carousel-overlay">
+        <h1>Our Dreams Together</h1>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="img/img3.png" alt="Romantic Scene 3">
+      <div class="carousel-overlay">
+        <h1>Forever Love</h1>
+      </div>
+    </div>
+    <div class="carousel-indicators">
+      <span class="active"></span>
+      <span></span>
+      <span></span>
+    </div>
+  </section>
+
+  <!-- Header with Navigation -->
+  <header class="sticky top-0 w-full z-50">
+    <nav class="max-w-6xl mx-auto flex items-center justify-center px-4 relative">
+      <div class="space-x-4">
+        <a href="index.html" class="text-white font-medium bg-pink-500/30 text-lg rounded-full hover:bg-pink-500/50 hover:text-pink-100 hover:shadow-md transition-all duration-300 nav-link active" id="nav-home">Home</a>
+        <a href="our-journey.html" class="text-white font-medium bg-pink-500/30 text-lg rounded-full hover:bg-pink-500/50 hover:text-pink-100 hover:shadow-md transition-all duration-300 nav-link" id="nav-journey">Our Journey</a>
+        <a href="our-eternal-love.html" class="text-white font-medium bg-pink-500/30 text-lg rounded-full hover:bg-pink-500/50 hover:text-pink-100 hover:shadow-md transition-all duration-300 nav-link" id="nav-eternal">Our Eternal Love</a>
+        <a href="our-poetic-love.html" class="text-white font-medium bg-pink-500/30 text-lg rounded-full hover:bg-pink-500/50 hover:text-pink-100 hover:shadow-md transition-all duration-300 nav-link" id="nav-poetic">Our Poetic Love</a>
+      </div>
+      <button id="heartBtn" class="heart-btn absolute right-4 text-pink-50 hover:text-pink-200 transition duration-300">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Heart-Shaped Title -->
+  <div class="heart-container">
+    <svg class="heart-svg" viewBox="0 0 100 90">
+      <path d="M50 80C50 80 20 60 10 40C0 20 10 0 30 0C40 0 50 10 50 10C50 10 60 0 70 0C90 0 100 20 90 40C80 60 50 80 50 80Z"/>
+    </svg>
+    <h1 class="heart-title">My Dearest Haadia Muzammil</h1>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto py-12 px-4 relative z-10">
+    <section class="bg-white/90 p-6 rounded-xl shadow-md border-2 border-pink-300/50 mb-8 opacity-0 translate-y-5 transition-all duration-800 ease-in-out" data-fade-in>
+      <h2 class="text-4xl font-bold text-pink-800 mb-4 font-playfair">Welcome to Our Love Story</h2>
+      <p class="text-lg">Haadia Muzammil, my forever love, explore our journey, eternal love, and poetic moments through the links above.</p>
+    </section>
+
+    <section class="bg-white/90 p-6 rounded-xl shadow-md border-2 border-pink-300/50 mb-8">
+      <h2 class="text-2xl font-bold text-pink-800 mb-4 font-playfair">Add to Our Love Story</h2>
+      <div class="space-y-4">
+        <input id="newImage" type="text" placeholder="Enter image URL" class="w-full p-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+        <textarea id="newParagraph" placeholder="Write your message for Haadia" class="w-full p-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500" rows="4"></textarea>
+        <select id="sectionSelect" class="w-full p-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+          <option value="our-journey">Our Journey</option>
+          <option value="our-eternal-love">Our Eternal Love</option>
+          <option value="our-poetic-love">Our Poetic Love</option>
+        </select>
+        <button onclick="addContent()" class="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition hover:shadow-lg">Add to Our Story</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Chatbot -->
+  <div class="chatbot">
+    <div class="chatbot-title">HI HAADIA</div>
+    <div class="chatbot-icon" onclick="toggleChatbot()"></div>
+    <div class="chatbot-speech active" id="chatbotSpeech">Hi</div>
+    <div class="chatbot-input" id="chatbotInput">
+      <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-pink-600 to-pink-800 text-white py-6 text-center relative z-10">
+    <p>Forever yours, Haadia Muzammil, with all my heart.</p>
+  </footer>
+
+  <!-- Love You Haadia Message -->
+  <div id="loveMessage" class="love-message">Love You Haadia</div>
+
+  <script>
+    // Carousel Functionality
+    const items = document.querySelectorAll('.carousel-item');
+    const indicators = document.querySelectorAll('.carousel-indicators span');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      items.forEach((item, i) => {
+        item.classList.toggle('active', i === index);
+        indicators[i].classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % items.length;
+      showSlide(currentIndex);
+    }
+
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        currentIndex = index;
+        showSlide(currentIndex);
+      });
+    });
+
+    setInterval(nextSlide, 5000);
+
+    // Add Content
+    async function addContent() {
+      const imageUrl = document.getElementById('newImage').value;
+      const paragraph = document.getElementById('newParagraph').value;
+      const sectionId = document.getElementById('sectionSelect').value;
+      if (imageUrl && paragraph) {
+        const response = await fetch('http://localhost:3000/api/contents', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageUrl, paragraph, sectionId })
+        });
+        if (response.ok) {
+          alert('Content added! Visit the respective page to see it.');
+          document.getElementById('newImage').value = '';
+          document.getElementById('newParagraph').value = '';
+        } else {
+          alert('Error adding content. Please try again.');
+        }
+      } else {
+        alert('Please enter both an image URL and a message.');
+      }
+    }
+
+    // Create Particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      for (let i = 0; i < 40; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.animationDelay = `${Math.random() * 7}s`;
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Heart Animation on Click
+    function triggerHeartAnimation() {
+      const loveMessage = document.getElementById('loveMessage');
+      loveMessage.classList.remove('active');
+      void loveMessage.offsetWidth;
+      loveMessage.classList.add('active');
+
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'nav-heart';
+        heart.style.left = `${Math.random() * 100}vw`;
+        heart.style.animationDelay = `${Math.random() * 2}s`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+
+    // Navigation Link Heart Animation
+    function triggerNavHearts(event) {
+      const rect = event.target.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+
+      for (let i = 0; i < 5; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'nav-heart';
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 2000);
+      }
+    }
+
+    // Active Navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      if (link.href === window.location.href) {
+        link.classList.add('active');
+      }
+      link.addEventListener('click', (event) => {
+        triggerNavHearts(event);
+      });
+    });
+
+    // Chatbot Functionality
+    let isChatbotOpen = false;
+    function toggleChatbot() {
+      isChatbotOpen = !isChatbotOpen;
+      document.getElementById('chatbotInput').classList.toggle('active', isChatbotOpen);
+      document.getElementById('chatbotSpeech').classList.toggle('active', !isChatbotOpen);
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim().toLowerCase();
+      if (message) {
+        const speech = document.getElementById('chatbotSpeech');
+        speech.classList.add('active');
+        if (message.includes('hi') || message.includes('hello')) {
+          speech.textContent = 'Hello Haadia! How can I help you today?';
+        } else if (message.includes('love')) {
+          speech.textContent = 'Aww, love is beautiful! Tell me more!';
+        } else {
+          speech.textContent = 'I’m not sure, but I’m here for you!';
+        }
+        input.value = '';
+      }
+    }
+
+    window.onload = () => {
+      const heartBtn = document.getElementById('heartBtn');
+      if (heartBtn) {
+        heartBtn.addEventListener('click', () => {
+          triggerHeartAnimation();
+        });
+      } else {
+        console.error('Heart button not found!');
+      }
+
+      createParticles();
+    };
+
+    // Fade-in Animation on Scroll
+    function handleScroll() {
+      const sections = document.querySelectorAll('[data-fade-in]');
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8) {
+          section.classList.add('opacity-100', 'translate-y-0');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+  </script>
+</body>
+</html> 
